@@ -1,0 +1,49 @@
+flowchart TD
+    A[User visits Signup Page]
+
+    %% STEP 1: EMAIL VERIFICATION
+    A --> B[Enter Email]
+    B --> C[Send Verification Link]
+    C --> D[Email Sent]
+    D --> E{Email Verified?}
+
+    E -- No --> D
+    E -- Yes --> F[Allow Step 2]
+
+    %% STEP 2: DETAILS SUBMISSION
+    F --> G[Enter Password & Basic Details]
+    G --> H[Submit Signup Form]
+
+    %% BACKEND CHECKS
+    H --> I{Backend Check}
+    I -->|Email not verified| J[Reject Signup]
+    I -->|Verified| K[Hash Password]
+
+    %% USER CREATION
+    K --> L[Create User in DB]
+    L --> M[Invalidate Verification Token]
+
+    %% AUTO LOGIN AFTER SIGNUP
+    M --> N[Programmatic Sign In]
+    N --> O["Create Session (JWT)"]
+    O --> P[Redirect to Main App]
+
+    %% LOGIN FLOWS
+    Q[Login Page] --> R[Credentials Login]
+    Q --> S[Google OAuth]
+
+    %% CREDENTIALS LOGIN
+    R --> T[Enter Email & Password]
+    T --> U[Fetch User by Email]
+    U --> V[Verify Password]
+    V --> W{Email Verified?}
+
+    W -- No --> X[Reject Login]
+    W -- Yes --> O
+
+    %% GOOGLE LOGIN
+    S --> Y[OAuth Callback]
+    Y --> Z{User Exists?}
+    Z -- Yes --> O
+    Z -- No --> AA["Create User (Email Verified)"]
+    AA --> O

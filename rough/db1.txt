@@ -1,0 +1,117 @@
+erDiagram
+
+    USERS {
+        UUID id PK
+        VARCHAR email
+        TEXT password_hash
+        BOOLEAN is_email_verified
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+
+    USER_PROFILES {
+        UUID user_id PK
+        VARCHAR username
+        VARCHAR phone_number
+        VARCHAR gender
+        INT age
+        BOOLEAN accepted_terms
+        TIMESTAMP created_at
+    }
+
+    PROPERTIES {
+        UUID id PK
+        UUID owner_id FK
+        TEXT title
+        VARCHAR city
+        TEXT landmark
+        VARCHAR property_type
+        INT rent_amount
+        INT deposit_amount
+        BOOLEAN negotiable
+        VARCHAR availability_status
+        TIMESTAMP created_at
+    }
+
+    PROPERTY_DETAILS {
+        UUID property_id PK
+        TEXT house_rules
+        INT total_bathrooms
+        BOOLEAN gated_security
+        VARCHAR owner_availability
+    }
+
+    PROPERTY_AMENITIES {
+        UUID property_id FK
+        VARCHAR amenity
+    }
+
+    PROPERTY_IMAGES {
+        UUID id PK
+        UUID property_id FK
+        TEXT image_url
+        TIMESTAMP uploaded_at
+    }
+
+    COMMUNITIES {
+        UUID id PK
+        TEXT name
+        VARCHAR type
+        VARCHAR city
+        TIMESTAMP created_at
+    }
+
+    COMMUNITY_MEMBERS {
+        UUID community_id FK
+        UUID user_id FK
+        TIMESTAMP joined_at
+    }
+
+    COMMUNITY_POSTS {
+        UUID id PK
+        UUID community_id FK
+        UUID author_id FK
+        TEXT content
+        TIMESTAMP created_at
+    }
+
+    CONVERSATIONS {
+        UUID id PK
+        UUID user_one FK
+        UUID user_two FK
+        TIMESTAMP created_at
+    }
+
+    CHAT_MESSAGES {
+        UUID id PK
+        UUID conversation_id FK
+        UUID sender_id FK
+        TEXT message
+        TIMESTAMP created_at
+    }
+
+    NOTIFICATIONS {
+        UUID id PK
+        UUID user_id FK
+        VARCHAR type
+        UUID reference_id
+        BOOLEAN is_read
+        TIMESTAMP created_at
+    }
+
+    USERS ||--|| USER_PROFILES : has
+    USERS ||--o{ PROPERTIES : owns
+    PROPERTIES ||--|| PROPERTY_DETAILS : has
+    PROPERTIES ||--o{ PROPERTY_IMAGES : has
+    PROPERTIES ||--o{ PROPERTY_AMENITIES : includes
+
+    USERS ||--o{ COMMUNITY_MEMBERS : joins
+    COMMUNITIES ||--o{ COMMUNITY_MEMBERS : contains
+    COMMUNITIES ||--o{ COMMUNITY_POSTS : has
+    USERS ||--o{ COMMUNITY_POSTS : writes
+
+    USERS ||--o{ CONVERSATIONS : participates
+    CONVERSATIONS ||--o{ CHAT_MESSAGES : contains
+    USERS ||--o{ CHAT_MESSAGES : sends
+
+    USERS ||--o{ NOTIFICATIONS : receives
