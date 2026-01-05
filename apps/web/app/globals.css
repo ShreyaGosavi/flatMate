@@ -1,4 +1,69 @@
+/* Tailwind v4 entry */
+@import "tailwindcss";
+
+
+/* ================================
+   DESIGN TOKENS (Tailwind v4)
+   ================================ */
+@theme {
+    /* Typography */
+    --font-sans: var(--font-sans);
+
+    /* Brand Colours (Yellow Scale) */
+    --color-brand-300: #FECF00; /* light yellow */
+    --color-brand-500: #E3B51A; /* primary yellow */
+    --color-brand-700: #D9A513; /* dark yellow */
+
+    /* Neutrals */
+    --color-surface: #F3F1ED;   /* white */
+    --color-foreground: #494436; /* black */
+}
+
+/* ================================
+   GLOBAL BASE STYLES
+   ================================ */
+html,
 body {
-    margin: 0;
-    font-family: system-ui, sans-serif;
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-sans), system-ui, sans-serif;
+    background-color: var(--color-surface);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* ================================
+   TYPOGRAPHY NORMALIZATION
+   ================================ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+
+p {
+    line-height: 1.6;
+}
+
+/* ================================
+   DEFAULT FOCUS STYLES (ACCESSIBLE)
+   ================================ */
+:focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+}
+
+/* ================================
+   SELECTION
+   ================================ */
+::selection {
+    background-color: var(--color-brand-300);
+    color: var(--color-foreground);
 }
