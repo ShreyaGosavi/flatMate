@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/*
+  USER
+*/
+model User {
+  id            String  @id @default(uuid())
+  email         String  @unique
+  passwordHash  String
+  emailVerified Boolean @default(false)
+
+  profile UserProfile?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/*
+  USER PROFILE
+*/
+model UserProfile {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  userName String
+  phone    String
+  gender   Gender
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Gender {
+  male
+  female
+}
