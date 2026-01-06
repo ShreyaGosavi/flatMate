@@ -1,26 +1,83 @@
-/* Tailwind v4 entry */
 @import "tailwindcss";
+@import "tw-animate-css";
 
+@custom-variant dark (&:is(.dark *));
 
 /* ================================
-   DESIGN TOKENS (Tailwind v4)
+   RAW DESIGN TOKENS (HEX – LOCKED)
    ================================ */
 @theme {
-    /* Typography */
     --font-sans: var(--font-sans);
 
-    /* Brand Colours (Yellow Scale) */
-    --color-brand-300: #FECF00; /* light yellow */
-    --color-brand-500: #E3B51A; /* primary yellow */
-    --color-brand-700: #D9A513; /* dark yellow */
+    --yellow-300: #fecf00;
+    --yellow-500: #e3b51a;
+    --yellow-700: #d9a513;
 
-    /* Neutrals */
-    --color-surface: #F3F1ED;   /* white */
-    --color-foreground: #494436; /* black */
+    --surface: #f3f1ed;
+    --text: #494436;
 }
 
 /* ================================
-   GLOBAL BASE STYLES
+   SHADCN SEMANTIC TOKENS (OKLCH)
+   ================================ */
+:root {
+    --radius: 0.625rem;
+
+    /* Base */
+    --background: 0.97 0.02 95;
+    --foreground: 0.32 0.03 95;
+
+    --card: 1 0 0;
+    --card-foreground: 0.32 0.03 95;
+
+    /* PRIMARY → #E3B51A */
+    --primary: 0.78 0.14 95;
+    --primary-foreground: 0.22 0.02 95;
+
+    /* SECONDARY → #FECF00 */
+    --secondary: 0.88 0.16 95;
+    --secondary-foreground: 0.22 0.02 95;
+
+    /* ACCENT / RING / HOVER → #D9A513 */
+    --accent: 0.72 0.13 95;
+    --accent-foreground: 0.22 0.02 95;
+
+    --muted: 0.92 0.02 95;
+    --muted-foreground: 0.45 0.02 95;
+
+    --border: 0.88 0.02 95;
+    --input: 0.88 0.02 95;
+    --ring: 0.72 0.13 95;
+
+    --destructive: 0.62 0.25 27;
+}
+
+/* ================================
+   TAILWIND EXPORT (CRITICAL)
+   ================================ */
+@theme inline {
+    --color-background: oklch(var(--background));
+    --color-foreground: oklch(var(--foreground));
+
+    --color-primary: oklch(var(--primary));
+    --color-primary-foreground: oklch(var(--primary-foreground));
+
+    --color-secondary: oklch(var(--secondary));
+    --color-secondary-foreground: oklch(var(--secondary-foreground));
+
+    --color-accent: oklch(var(--accent));
+    --color-accent-foreground: oklch(var(--accent-foreground));
+
+    --color-muted: oklch(var(--muted));
+    --color-muted-foreground: oklch(var(--muted-foreground));
+
+    --color-border: oklch(var(--border));
+    --color-input: oklch(var(--input));
+    --color-ring: oklch(var(--ring));
+}
+
+/* ================================
+   BASE STYLES
    ================================ */
 html,
 body {
@@ -29,41 +86,7 @@ body {
 
 body {
     font-family: var(--font-sans), system-ui, sans-serif;
-    background-color: var(--color-surface);
-    color: var(--color-foreground);
+    background-color: oklch(var(--background));
+    color: oklch(var(--foreground));
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-}
-
-/* ================================
-   TYPOGRAPHY NORMALIZATION
-   ================================ */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-weight: 500;
-    letter-spacing: -0.01em;
-}
-
-p {
-    line-height: 1.6;
-}
-
-/* ================================
-   DEFAULT FOCUS STYLES (ACCESSIBLE)
-   ================================ */
-:focus-visible {
-    outline: 2px solid var(--color-brand-500);
-    outline-offset: 2px;
-}
-
-/* ================================
-   SELECTION
-   ================================ */
-::selection {
-    background-color: var(--color-brand-300);
-    color: var(--color-foreground);
 }
